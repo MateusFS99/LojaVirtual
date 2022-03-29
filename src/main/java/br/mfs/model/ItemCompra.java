@@ -6,30 +6,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Compra")
-public class Compra {
+@Table(name = "ItemCompra")
+public class ItemCompra {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "compra_data")
-	private String data;
+	@Column(name = "itemcompra_qtde")
+	private int qtde;
 	
-	@Column(name = "compra_valor")
-	private Double valor;
-	
-	@Column(name = "compra_formapg")
-	private String formaPg;
-	
-	@ManyToOne
+	@OneToMany
 	@JoinColumn
-	private Usuario usuario;
+	private Produto produto;
+	
+	@OneToMany
+	@JoinColumn
+	private Compra compra;
 }
