@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -23,11 +25,12 @@ public class ItemCompra {
 	@Column(name = "itemcompra_qtde")
 	private int qtde;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn
 	private Produto produto;
 	
-	@OneToMany
+	@JsonBackReference
+	@ManyToOne
 	@JoinColumn
 	private Compra compra;
 }

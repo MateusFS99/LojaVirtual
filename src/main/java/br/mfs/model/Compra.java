@@ -1,5 +1,8 @@
 package br.mfs.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -32,4 +38,8 @@ public class Compra {
 	@ManyToOne
 	@JoinColumn
 	private Usuario usuario;
+	
+	@JsonManagedReference
+    @OneToMany(mappedBy = "compra", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    private List<ItemCompra> itens;
 }
