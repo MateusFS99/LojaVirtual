@@ -10,6 +10,6 @@ public class LoginController {
 	@GetMapping("/")
 	public String index(Model model) {
 		
-		return "";
+		return "produtos.jr";
 	}
 }

@@ -8,12 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "Produto")
 public class Produto {
 
+	public Produto(String nome, Double preco, String marca) {
+		
+		this.nome = nome;
+		this.preco = preco;
+		this.marca = marca;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
