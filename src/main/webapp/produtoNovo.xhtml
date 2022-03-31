@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastrar Produto</title>
+</h:head>
+
+<h:body>
+     <h:form>
+          <p:messages id="messages" />
+          <p:panelGrid columns="2">
+                <p:outputLabel for="nome" value="Nome:" />
+                <p:inputText id="nome" value="#{produtoMB.produto.nome}" />
+
+				<p:outputLabel for="preco" value="Preço:" />
+                <p:inputText id="preco" value="#{produtoMB.produto.preco}" />
+
+				<p:outputLabel for="marca" value="Marca:" />
+                <p:inputText id="marca" value="#{produtoMB.produto.marca}" />
+                
+                <p:commandButton  value="Cadastrar" icon="ui-icon-star"
+                 	action="#{produtoMB.create}" update="messages">
+                </p:commandButton>
+          </p:panelGrid>
+     </h:form>
+</h:body>
+</html>

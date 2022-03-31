@@ -5,6 +5,7 @@
      xmlns:p="http://primefaces.org/ui"
      xml:lang="en"
      xmlns:f="http://xmlns.jcp.org/jsf/core">
+     
 <h:head>
     <title>Lista de Produtos</title>
     <script type="text/javascript">
@@ -25,14 +26,13 @@
     <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
     
     <h:body>
+    	<p:commandButton  value="Cadastrar Novo" icon="ui-icon-star" action="/produtoNovo.jr">
+        </p:commandButton>
         <h:form id="formProdutos" prependId="false">
-            <h:commandLink action="#{produtoMB.listarTodos}" value="Recarregar a Listagem!" >
-                <p:graphicImage name="/images/refresh.png" alt="Recarregar listagem!" width="24"/>
-            </h:commandLink>
             <p:growl id="mensagens" showDetail="true" autoUpdate="true" closable="true">
                 <p:autoUpdate/>
             </p:growl>
-            <p:dataTable id="tabelaAluno" var="item" value="#{produtoMB.produtos}" prependId="false"
+            <p:dataTable id="tabelaProduto" var="item" value="#{produtoMB.produtos}" prependId="false"
                          paginator="true" rows="25" emptyMessage="Não há Produtos Cadastrados."
                          rowKey="#{item.id}" selectionMode="single"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}
@@ -42,23 +42,23 @@
                 <f:facet name="{Exporters}">
                     <h:commandLink id="exportExcel">
                         <p:graphicImage name="/images/excel.png" width="24"/>
-                        <p:dataExporter type="xls" target="tabelaAluno" fileName="listaAlunos"/>
+                        <p:dataExporter type="xls" target="tabelaProduto" fileName="listaProduto"/>
                     </h:commandLink>
                     <h:commandLink id="exportPDF">
                         <p:graphicImage name="/images/pdf.png" width="24"/>
-                        <p:dataExporter type="pdf" target="tabelaAluno" fileName="listaAlunos"/>
+                        <p:dataExporter type="pdf" target="tabelaProduto" fileName="listaProduto"/>
                     </h:commandLink>
                     <h:commandLink id="exportCSV">
                         <p:graphicImage name="/images/csv.png" width="24"/>
-                        <p:dataExporter type="csv" target="tabelaAluno" fileName="listaAlunos"/>
+                        <p:dataExporter type="csv" target="tabelaProduto" fileName="listaProduto"/>
                     </h:commandLink>
                     <h:commandLink id="exportXML">
                         <p:graphicImage name="/images/xml.png" width="24"/>
-                        <p:dataExporter type="xml" target="tabelaAluno" fileName="listaAlunos"/>
+                        <p:dataExporter type="xml" target="tabelaProduto" fileName="listaProduto"/>
                     </h:commandLink>
                 </f:facet>
 
-                <f:facet name="header"><p:outputLabel value="Lista de Produtos: #{produtoMB.tamanhoDaLista}"/> </f:facet>
+                <f:facet name="header"><p:outputLabel value="Lista de Produtos: #{produtoMB.produtos.size()}"/> </f:facet>
                 <p:column headerText="#" style="width: 6%;" sortBy="#{item.id}"
                           filterMatchMode="contains"
                           filterBy="#{item.id}">
@@ -78,7 +78,15 @@
                           filterBy="#{item.marca}">
                     <h:outputText value="#{item.marca}"/>
                 </p:column>
+                <p:column style="width:10%;text-align: center" headerText="Ações" exportable="false">
+                    <p:commandButton update=":formProdutos:produtoDetail" oncomplete="PF('itemDialog').show()"
+                                     icon="ui-icon-search"
+                                     title="Detalhe">
+                        <f:setPropertyActionListener value="#{item}" target="#{produtoMB.produto}"/>
+                    </p:commandButton>
+                </p:column>
             </p:dataTable>
+            
             <p:dialog header="Detalhes do Produto" widgetVar="itemDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="produtoDetail" style="text-align:center;">
                     <p:panelGrid columns="2" rendered="#{not empty produtoMB.produto}" columnClasses="label,value">
@@ -96,7 +104,7 @@
                         <h:inputText value="#{produtoMB.produto.preco}" disabled="true"/>
 
                         <h:outputText value="Marca"/>
-                        <h:inputText value="#{produtoMB.produto.Marca}" disabled="true"/>
+                        <h:inputText value="#{produtoMB.produto.marca}" disabled="true"/>
 
                     </p:panelGrid>
                     <p:panelGrid columns="2" columnClasses="label,value">

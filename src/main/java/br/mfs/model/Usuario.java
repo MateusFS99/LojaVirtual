@@ -8,11 +8,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "Usuario")
 public class Usuario {
+
+	public Usuario(String nome, String cpf, String login, String senha, String telefone, String endereco) {
+		
+		this.nome = nome;
+		this.cpf = cpf;
+		this.login = login;
+		this.senha = senha;
+		this.telefone = telefone;
+		this.endereco = endereco;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

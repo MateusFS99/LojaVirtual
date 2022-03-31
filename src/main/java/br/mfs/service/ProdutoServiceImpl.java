@@ -1,23 +1,42 @@
 package br.mfs.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.mfs.model.Produto;
 import br.mfs.repository.ProdutoRepository;
+import lombok.Getter;
+import lombok.Setter;
 
+@Named(value = "produtoMB")
+@ViewScoped
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
+	@Getter
+    @Setter
+    private List<Produto> produtos = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private Produto produto;
+    
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
 	@Override
 	public void create(Produto produto) {
-		this.produtoRepository.save(produto);
+		
+		this.produto = produto;
+		this.produtoRepository.save(this.produto);
 	}
 
 	@Override
@@ -39,9 +58,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return produto;
 	}
 
+	@PostConstruct
 	@Override
 	public List<Produto> getAll() {
-		return this.produtoRepository.findAll();
+		
+		produtos = this.produtoRepository.findAll();
+    	
+        return produtos;
 	}
-
 }

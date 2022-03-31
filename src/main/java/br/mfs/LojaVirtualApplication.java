@@ -18,7 +18,7 @@ public class LojaVirtualApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LojaVirtualApplication.class, args);
 	}
-
+	
 	@Bean
     public ServletRegistrationBean facesServletRegistration() {
         ServletRegistrationBean registration = new ServletRegistrationBean<>(new FacesServlet(), "*.xhtml");
@@ -30,7 +30,7 @@ public class LojaVirtualApplication {
     @Bean
     public ServletContextInitializer servletContextInitializer() {
         return servletContext -> {
-            servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
+            servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", "true");
             servletContext.setInitParameter("primefaces.THEME", "redmond");
         };
     }
